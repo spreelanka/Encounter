@@ -20,7 +20,7 @@ namespace Encounter.Services
         public async Task<List<Monster>> GetMonsters(int cr = 1)
         {
             var relativePath = string.Format(monsterPath, cr);
-            return await Get<List<Monster>>(relativePath);
+            return (await Get<MonstersResponse>(relativePath)).results;
         }
     }
 }

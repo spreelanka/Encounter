@@ -3,7 +3,7 @@ namespace Encounter.Models
 {
 	public class Monster
 	{
-        public string Name { get; set; }
+        public string name { get; set; }
     }
 }
 
