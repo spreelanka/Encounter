@@ -9,6 +9,7 @@ using Prism.Unity;
 using Prism.Plugin.Popups;
 using Encounter.Services.Interfaces;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Encounter
 {
@@ -35,6 +36,7 @@ namespace Encounter
         {
             // This updates INavigationService and registers PopupNavigation.Instance
             containerRegistry.RegisterPopupNavigationService();
+            containerRegistry.RegisterSingleton<HttpMessageHandler, HttpClientHandler>();
             containerRegistry.RegisterSingleton<IMonsterService, MonsterService>();
             containerRegistry.RegisterSingleton<IEncounterService, EncounterService>();
             containerRegistry.RegisterForNavigation<AboutPage>();

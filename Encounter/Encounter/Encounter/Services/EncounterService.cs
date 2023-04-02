@@ -1,5 +1,6 @@
 ﻿	using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Encounter.Services.Interfaces;
 
@@ -8,8 +9,8 @@ namespace Encounter.Services
 	public class EncounterService: BaseOpen5eService, IEncounterService
 	{
 		protected IMonsterService monsterService;
-        public EncounterService(IMonsterService monsterService)
-		{
+        public EncounterService(IMonsterService monsterService, HttpMessageHandler messageHandler) : base(messageHandler)
+        {
 			this.monsterService = monsterService;
 		}
 
