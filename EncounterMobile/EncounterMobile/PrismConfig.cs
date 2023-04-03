@@ -6,6 +6,8 @@ using System.Net;
 using System.Reflection.Metadata;
 using Microsoft.Extensions.Logging;
 using EncounterMobile.ViewModels;
+using EncounterMobile.Services.Interfaces;
+using EncounterMobile.Services;
 
 namespace EncounterMobile
 {
@@ -23,8 +25,14 @@ namespace EncounterMobile
         private static void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
-                .RegisterForNavigation<MainPage, MainPageViewModel>("MainPage")
+                .RegisterForNavigation<MainPage,MainPageViewModel>()
+                .RegisterSingleton<HttpMessageHandler, HttpClientHandler>()
+                .RegisterSingleton<IMonsterService, MonsterService>()
+                .RegisterSingleton<IEncounterService, EncounterService>()
+
+                //.RegisterSingleton<IAppInfo, AppInfoImplementation>()
                 //.RegisterScoped<BaseServices>()
+                //.RegisterSingleton
                 .RegisterInstance(SemanticScreenReader.Default)
                 .RegisterInstance(DeviceInfo.Current)
                 .RegisterInstance(Launcher.Default);
