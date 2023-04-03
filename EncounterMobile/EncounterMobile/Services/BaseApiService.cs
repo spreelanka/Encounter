@@ -46,7 +46,7 @@ namespace EncounterMobile.Services
             return result;
         }
 
-        public async Task Put<TRequest>(string relativePath, TRequest request)
+        public async Task<System.Net.HttpStatusCode> Put<TRequest>(string relativePath, TRequest request)
         {
             var json = JsonConvert.SerializeObject(request, new JsonSerializerSettings
             {
@@ -56,6 +56,7 @@ namespace EncounterMobile.Services
             var putContent = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await Client.PutAsync(relativePath, putContent);
             var content = await response.Content.ReadAsStringAsync();
+            return response.StatusCode;
         }
 
         public async Task<TResponse> Post<TResponse, TRequest>(string relativePath, TRequest request) where TRequest : class
