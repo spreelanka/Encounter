@@ -12,7 +12,8 @@ namespace EncounterMobile.Services
         private string monsterPath = "monsters/?challenge_rating={0}";
         private int seed => constantSeed?.Seed ?? Environment.TickCount;
 
-        private RandomSeed constantSeed = null;
+        //private RandomSeed constantSeed = null;
+        private RandomSeed constantSeed = new RandomSeed { Seed = 1234 };
 
         public class RandomSeed
         {
@@ -22,7 +23,7 @@ namespace EncounterMobile.Services
 
         public MonsterService(HttpMessageHandler messageHandler, RandomSeed seed=null) : base(messageHandler)
         {
-            constantSeed = seed;
+            //constantSeed = seed;
         }
 
         public async Task<Monster> GetMonster(int cr = 1)
