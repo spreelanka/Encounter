@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using EncounterMobile.Services.Interfaces;
+using Newtonsoft.Json;
 
 namespace EncounterMobile.Services
 {
@@ -18,7 +19,8 @@ namespace EncounterMobile.Services
         {
 			var monster = await monsterService.GetMonster(cr);
 			var encounter = new Models.Encounter { CR = cr, Monsters = new List<Models.Monster> { monster } };
-			return encounter;
+
+            return encounter;
         }
     }
 }
