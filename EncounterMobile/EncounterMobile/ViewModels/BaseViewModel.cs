@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace EncounterMobile.ViewModels
 {
-	public abstract class BaseViewModel: INotifyPropertyChanged, INavigationAware
+	public abstract class BaseViewModel: BaseObservable, INavigationAware
 	{
         protected INavigationService navigationService { get; set; }
 
@@ -12,11 +12,6 @@ namespace EncounterMobile.ViewModels
 		{
 			this.navigationService = navigationService;
 		}
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters){}
 

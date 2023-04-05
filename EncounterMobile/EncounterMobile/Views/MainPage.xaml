@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EncounterMobile.Views.MainPage">
+             x:Class="EncounterMobile.Views.MainPage"
+             xmlns:converters="clr-namespace:EncounterMobile.ViewModels.Converters" >
+    <ContentPage.Resources>
+        <converters:DefeatedToImageConverter x:Key="defeatedToImageConverter" />
+    </ContentPage.Resources>
 
     <ScrollView>
         <CollectionView ItemsSource="{Binding MapTiles}"
@@ -28,25 +32,12 @@
                                Aspect="AspectFit"
                                HeightRequest="200"
                                WidthRequest="200" />
-                        <Label Grid.Column="0"
-                               Grid.Row="1"
-                               HorizontalTextAlignment="Center"
-                               Grid.ColumnSpan="3"
-                               Grid.RowSpan="2"
-                               Text="{Binding MonsterName}"
-                               FontFamily="khazad"
-                               TextColor="Black"
-                               TranslationY="-20"
-                               Rotation="10"
-                               FontSize="30">
-                            <Label.Shadow>
-                                 <Shadow Brush="DeepPink"
-                                    Offset="7,7"
-                                    Radius="1"
-                                    Opacity=".7" />
-                            </Label.Shadow>
-
-                        </Label>
+                        <Image
+                            Source="{Binding Path=Defeated, Converter={StaticResource defeatedToImageConverter}}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"/>
                         <Label Grid.Row="1"
                                Grid.Column="1"
                                IsVisible="false"

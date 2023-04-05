@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using EncounterMobile.Models;
 using EncounterMobile.Services.Interfaces;
 using EncounterMobile.Views;
 using Prism.Navigation.Xaml;
+using static Java.Util.Jar.Attributes;
 
 namespace EncounterMobile.ViewModels
 {
@@ -12,8 +15,8 @@ namespace EncounterMobile.ViewModels
 	{
         protected IEncounterService encounterService { get; set; }
         
-        IEnumerable<MapTile> mapTiles;
-        public IEnumerable<MapTile> MapTiles { 
+        ObservableCollection<MapTile> mapTiles;
+        public ObservableCollection<MapTile> MapTiles { 
             get => mapTiles;
             set => this.SetProperty(ref mapTiles, value, OnPropertyChanged);
         }
@@ -30,7 +33,7 @@ namespace EncounterMobile.ViewModels
             this.encounterService = encounterService;
             Task.Run(async () =>
             {
-                var mapTiles = new List<MapTile>();
+                var mapTiles = new ObservableCollection<MapTile>();
                 for (var i = 0; i < 9; i++)
                 {
                     var encounter = await encounterService.GetEncounter();

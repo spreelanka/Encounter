@@ -68,17 +68,19 @@
 	  <None Remove="Resources\Fonts\khazad3d.ttf" />
 	  <None Remove="Resources\Images\goblin.png" />
 	  <None Remove="Resources\Images\goblinDead.png" />
+	  <None Remove="ViewModels\Converters\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Models\" />
+	  <Folder Include="ViewModels\Converters\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <BundleResource Include="Resources\Fonts\khazad.ttf" />
 	  <BundleResource Include="Resources\Fonts\khazad3d.ttf" />
 	  <BundleResource Include="Resources\Images\goblin.png" />
-	  <BundleResource Include="Resources\Images\goblinDead.png" />
+	  <BundleResource Include="Resources\Images\goblin_dead.png" />
 	</ItemGroup>
 </Project>
