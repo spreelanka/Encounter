@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="EncounterMobile.MainPage">
+             x:Class="EncounterMobile.Views.MainPage">
 
     <ScrollView>
         <CollectionView ItemsSource="{Binding MapTiles}"
                         ItemsLayout="VerticalGrid, 2"
-                        BackgroundColor="White">
+                        BackgroundColor="White"
+                        SelectedItem="{Binding SelectedMapTile}"
+                        SelectionChangedCommand="{Binding SelectedMapTileChangedCommand}"
+                        SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0">

@@ -1,4 +1,4 @@
-﻿namespace EncounterMobile;
+﻿namespace EncounterMobile.Views;
 
 public partial class MainPage : ContentPage
 {

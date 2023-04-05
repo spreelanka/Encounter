@@ -66,6 +66,8 @@
 	  <None Remove="Models\" />
 	  <None Remove="Resources\Fonts\khazad.ttf" />
 	  <None Remove="Resources\Fonts\khazad3d.ttf" />
+	  <None Remove="Resources\Images\goblin.png" />
+	  <None Remove="Resources\Images\goblinDead.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
@@ -76,5 +78,7 @@
 	<ItemGroup>
 	  <BundleResource Include="Resources\Fonts\khazad.ttf" />
 	  <BundleResource Include="Resources\Fonts\khazad3d.ttf" />
+	  <BundleResource Include="Resources\Images\goblin.png" />
+	  <BundleResource Include="Resources\Images\goblinDead.png" />
 	</ItemGroup>
 </Project>

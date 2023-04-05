@@ -3,21 +3,31 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EncounterMobile.Models;
 using EncounterMobile.Services.Interfaces;
+using EncounterMobile.Views;
+using Prism.Navigation.Xaml;
 
 namespace EncounterMobile.ViewModels
 {
-	public class MainPageViewModel: INotifyPropertyChanged
+	public class MainPageViewModel: BaseViewModel
 	{
         protected IEncounterService encounterService { get; set; }
-
+        
         IEnumerable<MapTile> mapTiles;
         public IEnumerable<MapTile> MapTiles { 
             get => mapTiles;
             set => this.SetProperty(ref mapTiles, value, OnPropertyChanged);
         }
 
-        public MainPageViewModel(IEncounterService encounterService)
+        MapTile selectedMapTile;
+        public MapTile SelectedMapTile
         {
+            get => selectedMapTile;
+            set => this.SetProperty(ref selectedMapTile, value, OnPropertyChanged);
+        }
+
+        public MainPageViewModel(INavigationService navigationService, IEncounterService encounterService):base(navigationService)
+        {
+            this.encounterService = encounterService;
             Task.Run(async () =>
             {
                 var mapTiles = new List<MapTile>();
@@ -31,10 +41,17 @@ namespace EncounterMobile.ViewModels
             });
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Command SelectedMapTileChangedCommand => new Command((sender) =>
+        {
+            if(SelectedMapTile!=null)
+                navigationService.NavigateAsync(nameof(MapTilePage),new NavigationParameters { {nameof(MapTile) , SelectedMapTile } });
+        });
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null) =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            SelectedMapTile = null;
+        }
     }
 }
 

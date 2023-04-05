@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EncounterMobile.Views.MapTilePage"
+             Title="MapTilePage">
+    <VerticalStackLayout>
+        <Label 
+            Text="{Binding MapTile.Encounter.Monsters[0].name}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <CheckBox IsChecked="{Binding MapTile.Defeated,Mode=TwoWay}" />
+        <Label Text="Defeated" />
+    </VerticalStackLayout>
+</ContentPage>
