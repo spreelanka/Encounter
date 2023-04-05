@@ -13,7 +13,10 @@
                         BackgroundColor="White"
                         SelectedItem="{Binding SelectedMapTile}"
                         SelectionChangedCommand="{Binding SelectedMapTileChangedCommand}"
-                        SelectionMode="Single">
+                        SelectionMode="Single"
+                        RemainingItemsThreshold="20"
+                        RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}"
+                        >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0">

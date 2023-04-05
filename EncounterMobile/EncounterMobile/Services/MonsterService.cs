@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using EncounterMobile.Models;
+using EncounterMobile.Helpers;
 using EncounterMobile.Services.Interfaces;
 
 namespace EncounterMobile.Services
@@ -15,15 +16,10 @@ namespace EncounterMobile.Services
         private RandomSeed constantSeed = null;
         //private RandomSeed constantSeed = new RandomSeed { Seed = 1234 };
 
-        public class RandomSeed
-        {
-            public int Seed;
-        }
-        
 
-        public MonsterService(HttpMessageHandler messageHandler, RandomSeed seed=null) : base(messageHandler)
+        public MonsterService(HttpMessageHandler messageHandler, RandomSeed seed = null) : base(messageHandler)
         {
-            //constantSeed = seed;
+            constantSeed = seed;
         }
 
         public async Task<Monster> GetMonster(int cr = 1)
