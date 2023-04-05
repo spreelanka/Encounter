@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using EncounterMobile.ViewModels;
 using EncounterMobile.Services.Interfaces;
 using EncounterMobile.Services;
+using EncounterMobile.Views;
+using Prism.Behaviors;
 
 namespace EncounterMobile
 {
@@ -19,13 +21,15 @@ namespace EncounterMobile
                 //.ConfigureLogging(logging => logging.AddConsole())
                 .ConfigureModuleCatalog(ConfigureModuleCatalog)
                 .OnInitialized(OnInitialized)
-                .OnAppStart("MainPage");
+                .OnAppStart($"{nameof(NavigationPage)}/{nameof(MainPage)}");
         }
 
         private static void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
-                .RegisterForNavigation<MainPage,MainPageViewModel>()
+                .RegisterForNavigation<NavigationPage>()
+                .RegisterForNavigation<MainPage, MainPageViewModel>()
+                .RegisterForNavigation<MapTilePage, MapTilePageViewModel>()
                 .RegisterSingleton<HttpMessageHandler, HttpClientHandler>()
                 .RegisterSingleton<IMonsterService, MonsterService>()
                 .RegisterSingleton<IEncounterService, EncounterService>()
@@ -33,6 +37,7 @@ namespace EncounterMobile
                 //.RegisterSingleton<IAppInfo, AppInfoImplementation>()
                 //.RegisterScoped<BaseServices>()
                 //.RegisterSingleton
+                .RegisterPageBehavior<NavigationPage,NavigationPageSystemGoBackBehavior>()
                 .RegisterInstance(SemanticScreenReader.Default)
                 .RegisterInstance(DeviceInfo.Current)
                 .RegisterInstance(Launcher.Default);
