@@ -10,8 +10,6 @@ namespace EncounterMobileUnitTests
 {
 	public class EncounterServiceTests
 	{
-        //private MonsterService.RandomSeed Seed = new MonsterService.RandomSeed { Seed = 1234 };
-        //private int ExpectedRandomIndexFromSeed = 19;
 
         [SetUp]
         public void Setup()

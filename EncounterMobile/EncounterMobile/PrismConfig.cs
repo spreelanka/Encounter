@@ -9,6 +9,7 @@ using EncounterMobile.ViewModels;
 using EncounterMobile.Services.Interfaces;
 using EncounterMobile.Services;
 using EncounterMobile.Views;
+using EncounterMobile.Helpers;
 using Prism.Behaviors;
 using Prism.Controls;
 
@@ -34,6 +35,7 @@ namespace EncounterMobile
                 .RegisterSingleton<HttpMessageHandler, HttpClientHandler>()
                 .RegisterSingleton<IMonsterService, MonsterService>()
                 .RegisterSingleton<IEncounterService, EncounterService>()
+                .RegisterInstance<RandomSeed>(null)
 
                 //.RegisterSingleton<IAppInfo, AppInfoImplementation>()
                 //.RegisterScoped<BaseServices>()

@@ -1,19 +1,19 @@
 ﻿using System;
 using Moq;
 using Moq.Protected;
-using static EncounterMobileUnitTests.BaseApiServiceTests;
 using System.Text;
 using EncounterMobile.Services;
 using Newtonsoft.Json;
 using System.Reflection.Metadata;
 using EncounterMobile.Models;
+using EncounterMobile;
 
 namespace EncounterMobileUnitTests
 {
     public class MonsterServiceTests
     {
 
-        private MonsterService.RandomSeed Seed = new MonsterService.RandomSeed { Seed = 1234 };
+        private RandomSeed Seed = new RandomSeed { Seed = 1234 };
         private int ExpectedRandomIndexFromSeed = 19;
 
         [SetUp]
