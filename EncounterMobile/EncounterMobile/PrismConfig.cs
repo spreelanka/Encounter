@@ -10,6 +10,7 @@ using EncounterMobile.Services.Interfaces;
 using EncounterMobile.Services;
 using EncounterMobile.Views;
 using Prism.Behaviors;
+using Prism.Controls;
 
 namespace EncounterMobile
 {
@@ -21,13 +22,13 @@ namespace EncounterMobile
                 //.ConfigureLogging(logging => logging.AddConsole())
                 .ConfigureModuleCatalog(ConfigureModuleCatalog)
                 .OnInitialized(OnInitialized)
-                .OnAppStart($"{nameof(NavigationPage)}/{nameof(MainPage)}");
+                .OnAppStart($"{nameof(PrismNavigationPage)}/{nameof(MainPage)}");
         }
 
         private static void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
-                .RegisterForNavigation<NavigationPage>()
+                .RegisterForNavigation<PrismNavigationPage>()
                 .RegisterForNavigation<MainPage, MainPageViewModel>()
                 .RegisterForNavigation<MapTilePage, MapTilePageViewModel>()
                 .RegisterSingleton<HttpMessageHandler, HttpClientHandler>()
