@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EncounterMobile.Models;
 using EncounterMobile.Services.Interfaces;
-using IntelliJ.Lang.Annotations;
-using Kotlin.Time;
 
 namespace EncounterMobile.ViewModels
 {

@@ -24,7 +24,7 @@ namespace EncounterMobileUnitTests
 
         private Task<HttpResponseMessage> GetMonster_MockResponse(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Assert.AreEqual("/monsters/?challenge_rating=1", request.RequestUri.LocalPath);
+            Assert.AreEqual("/monsters/?challenge_rating=1", request.RequestUri.PathAndQuery);
             var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
             response.Content = new StringContent(GetJson(), Encoding.UTF8, "application/json");
             return Task.FromResult(response);

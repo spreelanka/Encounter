@@ -7,7 +7,6 @@ using EncounterMobile.Models;
 using EncounterMobile.Services.Interfaces;
 using EncounterMobile.Views;
 using Prism.Navigation.Xaml;
-using static Java.Util.Jar.Attributes;
 
 namespace EncounterMobile.ViewModels
 {
