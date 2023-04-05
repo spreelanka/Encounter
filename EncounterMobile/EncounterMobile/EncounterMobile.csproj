@@ -64,11 +64,17 @@
 	  <None Remove="ViewModels\" />
 	  <None Remove="Services\" />
 	  <None Remove="Models\" />
+	  <None Remove="Resources\Fonts\khazad.ttf" />
+	  <None Remove="Resources\Fonts\khazad3d.ttf" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Views\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Models\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Fonts\khazad.ttf" />
+	  <BundleResource Include="Resources\Fonts\khazad3d.ttf" />
 	</ItemGroup>
 </Project>

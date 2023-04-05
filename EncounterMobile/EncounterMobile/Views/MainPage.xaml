@@ -4,38 +4,56 @@
              x:Class="EncounterMobile.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+        <CollectionView ItemsSource="{Binding MapTiles}"
+                        ItemsLayout="VerticalGrid, 2"
+                        BackgroundColor="White">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.RowSpan="2"
+                               Grid.ColumnSpan="3"
+                               Source="{Binding MapUri}"
+                               Aspect="AspectFit"
+                               HeightRequest="200"
+                               WidthRequest="200" />
+                        <Label Grid.Column="0"
+                               Grid.Row="1"
+                               HorizontalTextAlignment="Center"
+                               Grid.ColumnSpan="3"
+                               Grid.RowSpan="2"
+                               Text="{Binding MonsterName}"
+                               FontFamily="khazad"
+                               TextColor="Black"
+                               TranslationY="-20"
+                               Rotation="10"
+                               FontSize="30">
+                            <Label.Shadow>
+                                 <Shadow Brush="DeepPink"
+                                    Offset="7,7"
+                                    Radius="1"
+                                    Opacity=".7" />
+                            </Label.Shadow>
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
+                        </Label>
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               IsVisible="false"
+                               Text="{Binding MonsterName}"
+                               FontAttributes="Italic"
+                               VerticalOptions="End" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </ScrollView>
 
 </ContentPage>

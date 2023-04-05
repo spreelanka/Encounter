@@ -12,8 +12,8 @@ namespace EncounterMobile.Services
         private string monsterPath = "monsters/?challenge_rating={0}";
         private int seed => constantSeed?.Seed ?? Environment.TickCount;
 
-        //private RandomSeed constantSeed = null;
-        private RandomSeed constantSeed = new RandomSeed { Seed = 1234 };
+        private RandomSeed constantSeed = null;
+        //private RandomSeed constantSeed = new RandomSeed { Seed = 1234 };
 
         public class RandomSeed
         {
