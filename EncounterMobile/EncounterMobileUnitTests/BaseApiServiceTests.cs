@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
+using EncounterMobile.NetworkPolicies;
 using EncounterMobile.Services;
 using Moq;
 using Moq.Protected;
+using Polly;
+using Polly.Registry;
 
 namespace EncounterMobileUnitTests
 {
 	public class BaseApiServiceTests
 	{
         BaseApiService subject;
+        
         public class ConcreteBaseApiService : BaseApiService
         {
-            public ConcreteBaseApiService(HttpMessageHandler messageHandler) : base(messageHandler)
+            public ConcreteBaseApiService(HttpMessageHandler messageHandler, IReadOnlyPolicyRegistry<string> policyRegistry) : base(messageHandler, policyRegistry)
             {
             }
 
@@ -45,10 +49,14 @@ namespace EncounterMobileUnitTests
             }
         }
 
+        IReadOnlyPolicyRegistry<string> policyRegistry;
         [SetUp]
         public void Setup()
         {
-            
+            policyRegistry = new PolicyRegistry
+            {
+                { PolicyNames.DefaultPolicy, Policy.NoOpAsync() }
+            };
         }
 
         [Test]
@@ -60,7 +68,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => GetMockResponse(request, cancellationToken))
                 .Verifiable();
 
-            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object);
+            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object, policyRegistry);
 
             var result = await subject.Get<Response>("/expectedPath");
             Assert.Pass();
@@ -75,7 +83,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => GetMockResponse(request, cancellationToken))
                 .Verifiable();
 
-            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object);
+            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object, policyRegistry);
 
             var result = await subject.Get<Response>("/expectedPathPlus");
             Assert.IsNull(result);
@@ -112,7 +120,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => PutMockResponse(request, cancellationToken))
                 .Verifiable();
 
-            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object);
+            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object, policyRegistry);
             var content = new Response { isAuthenticated = false };
             var code = await subject.Put<Response>("/expectedPath",content);
             Assert.AreEqual(System.Net.HttpStatusCode.OK, code);
@@ -127,7 +135,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => PutMockResponse(request, cancellationToken))
                 .Verifiable();
 
-            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object);
+            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object, policyRegistry);
             var content = new Response { isAuthenticated = false };
             var code = await subject.Put<Response>("/expectedPathPlus", content);
             Assert.AreEqual(System.Net.HttpStatusCode.BadRequest, code);
@@ -168,7 +176,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => PostMockResponse(request, cancellationToken))
                 .Verifiable();
 
-            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object);
+            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object, policyRegistry);
             var content = new Request { Flag = true };
             var response = await subject.Post<Response,Request>("/expectedPath", content);
 
@@ -184,7 +192,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => PostMockResponse(request, cancellationToken))
                 .Verifiable();
 
-            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object);
+            subject = new ConcreteBaseApiService(httpMessageHandlerMoq.Object, policyRegistry);
             var content = new Request { Flag = true };
             var response = await subject.Post<Response,Request>("/expectedPathPlus", content);
             Assert.IsNull(response);

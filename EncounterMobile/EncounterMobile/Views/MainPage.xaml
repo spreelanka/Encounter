@@ -31,14 +31,12 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.RowSpan="2"
                                Grid.ColumnSpan="3"
-                               
                                Aspect="AspectFit"
                                HeightRequest="200"
                                WidthRequest="200">
                             <Image.Source>
                                 <UriImageSource Uri="{Binding MapUri}" CachingEnabled="True" CacheValidity="30" />
                             </Image.Source>
-
                         </Image>
                         <Image
                             Source="{Binding Path=Defeated, Converter={StaticResource defeatedToImageConverter}}"

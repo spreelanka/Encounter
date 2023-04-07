@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Polly.Registry;
 
 namespace EncounterMobile.Services
 {
@@ -26,7 +27,7 @@ namespace EncounterMobile.Services
 
         private HttpMessageHandler messageHandler { get; set; }
 
-        public BaseApiService(HttpMessageHandler messageHandler)
+        public BaseApiService(HttpMessageHandler messageHandler, IReadOnlyPolicyRegistry<string> policyRegistry)
         {
             this.messageHandler = messageHandler;
         }

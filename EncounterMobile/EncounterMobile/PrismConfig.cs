@@ -12,6 +12,9 @@ using EncounterMobile.Views;
 using EncounterMobile.Helpers;
 using Prism.Behaviors;
 using Prism.Controls;
+using Polly.Registry;
+using EncounterMobile.NetworkPolicies;
+using Polly;
 
 namespace EncounterMobile
 {
@@ -26,8 +29,42 @@ namespace EncounterMobile
                 .OnAppStart($"{nameof(PrismNavigationPage)}/{nameof(MainPage)}");
         }
 
+
+        // not unit testing this because:
+        // https://github.com/App-vNext/Polly/wiki/Unit-testing-with-Polly---with-examples#4-i-want-to-unit-test-that-the-polly-policies-i-apply-actually-do-what-they-say-on-the-tin
+        private static IAsyncPolicy DefaultPolicy()
+        {
+            var retry = Policy
+                .Handle<HttpRequestException>()
+                .RetryAsync(3);
+
+            var breaker = Policy
+                .Handle<HttpRequestException>()
+                .CircuitBreakerAsync(
+                    exceptionsAllowedBeforeBreaking: 2,
+                    durationOfBreak: TimeSpan.FromMinutes(1)
+                );
+            var all = Policy.WrapAsync(retry, breaker);
+            return all;
+        }
+
+        private static PolicyRegistry policyRegistry;
+        private static PolicyRegistry PolicyRegistry {
+            get {
+                if (policyRegistry != null)
+                    return policyRegistry;
+                policyRegistry = new PolicyRegistry
+                {
+                    { PolicyNames.DefaultPolicy, DefaultPolicy() }
+                };
+                return policyRegistry;
+            }
+        }
+
         private static void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
+
             containerRegistry
                 .RegisterForNavigation<PrismNavigationPage>()
                 .RegisterForNavigation<MainPage, MainPageViewModel>()
@@ -36,6 +73,7 @@ namespace EncounterMobile
                 .RegisterSingleton<IMonsterService, MonsterService>()
                 .RegisterSingleton<IEncounterService, EncounterService>()
                 .RegisterInstance<RandomSeed>(null)
+                .RegisterInstance<IReadOnlyPolicyRegistry<string>>(PolicyRegistry)
 
                 //.RegisterSingleton<IAppInfo, AppInfoImplementation>()
                 //.RegisterScoped<BaseServices>()
