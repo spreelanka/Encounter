@@ -58,6 +58,7 @@
 		<PackageReference Include="Prism.DryIoc.Maui" Version="8.1.273-pre" />
 		<PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.7.4" />
 		<PackageReference Include="Polly" Version="7.2.3" />
+		<PackageReference Include="NeoSmart.Caching.Sqlite" Version="6.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
