@@ -7,15 +7,17 @@
         <converters:DefeatedToImageConverter x:Key="defeatedToImageConverter" />
     </ContentPage.Resources>
 
-    <ScrollView>
-        <CollectionView ItemsSource="{Binding MapTiles}"
+    
+        <CollectionView x:Name="mapTilesCollectionView"
+                        ItemsSource="{Binding MapTiles}"
                         ItemsLayout="VerticalGrid, 2"
                         BackgroundColor="White"
+                        RemainingItemsThreshold="{Binding LoadMoreThreshold}"
+                        RemainingItemsThresholdReached="OnCollectionViewRemainingItemsThresholdReached"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMore}"
                         SelectedItem="{Binding SelectedMapTile}"
                         SelectionChangedCommand="{Binding SelectedMapTileChangedCommand}"
                         SelectionMode="Single"
-                        RemainingItemsThreshold="20"
-                        RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}"
                         >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -54,7 +56,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </ScrollView>
+    
 
 </ContentPage>
 

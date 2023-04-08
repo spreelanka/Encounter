@@ -15,6 +15,8 @@ using Prism.Controls;
 using Polly.Registry;
 using EncounterMobile.NetworkPolicies;
 using Polly;
+using Microsoft.Extensions.Caching.Memory;
+using Polly.Caching.Memory;
 
 namespace EncounterMobile
 {
@@ -44,7 +46,19 @@ namespace EncounterMobile
                     exceptionsAllowedBeforeBreaking: 2,
                     durationOfBreak: TimeSpan.FromMinutes(1)
                 );
-            var all = Policy.WrapAsync(retry, breaker);
+
+            var cache = new MemoryCache(new MemoryCacheOptions());
+            var cacheProvider = new MemoryCacheProvider(cache);
+            
+            var cachePolicy = Policy
+                .CacheAsync(cacheProvider, TimeSpan.FromMinutes(5));
+
+
+            //var all = Policy.WrapAsync(cachePolicy, retry, breaker);
+            //var all = Policy.WrapAsync(retry, breaker);
+
+            //var all = Policy.WrapAsync(retry, Policy.NoOpAsync());
+            var all = Policy.WrapAsync(Policy.NoOpAsync(), Policy.NoOpAsync());
             return all;
         }
 
@@ -63,7 +77,6 @@ namespace EncounterMobile
 
         private static void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
 
             containerRegistry
                 .RegisterForNavigation<PrismNavigationPage>()
