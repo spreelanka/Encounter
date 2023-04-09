@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EncounterMobile.Models;
 using EncounterMobile.Helpers;
 using EncounterMobile.Services.Interfaces;
+using Polly.Registry;
 
 namespace EncounterMobile.Services
 {
@@ -17,7 +18,7 @@ namespace EncounterMobile.Services
         //private RandomSeed constantSeed = new RandomSeed { Seed = 1234 };
 
 
-        public MonsterService(HttpMessageHandler messageHandler, RandomSeed seed = null) : base(messageHandler)
+        public MonsterService(HttpMessageHandler messageHandler, IReadOnlyPolicyRegistry<string> policyRegistry, RandomSeed seed = null) : base(messageHandler, policyRegistry)
         {
             constantSeed = seed;
         }

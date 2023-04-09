@@ -2,7 +2,10 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using EncounterMobile.NetworkPolicies;
 using Newtonsoft.Json;
+using Polly;
+using Polly.Registry;
 
 namespace EncounterMobile.Services
 {
@@ -25,15 +28,20 @@ namespace EncounterMobile.Services
         }
 
         private HttpMessageHandler messageHandler { get; set; }
+        private AsyncPolicy policy { get; set; }
 
-        public BaseApiService(HttpMessageHandler messageHandler)
+        public BaseApiService(HttpMessageHandler messageHandler, IReadOnlyPolicyRegistry<string> policyRegistry)
         {
             this.messageHandler = messageHandler;
+            policy = policyRegistry.Get<AsyncPolicy>(PolicyNames.DefaultPolicy);
         }
 
         public async Task<TResponse> Get<TResponse>(string relativePath)
         {
-            var response = await Client.GetAsync(relativePath);
+            var response = await policy.ExecuteAsync(async (context) =>
+            {
+                return await Client.GetAsync(relativePath);
+            }, new Context(relativePath));
 
             if (!response.IsSuccessStatusCode)
             {

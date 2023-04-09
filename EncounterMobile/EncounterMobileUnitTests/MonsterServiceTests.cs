@@ -7,6 +7,10 @@ using Newtonsoft.Json;
 using System.Reflection.Metadata;
 using EncounterMobile.Models;
 using EncounterMobile;
+using EncounterMobile.Helpers;
+using Polly;
+using Polly.Registry;
+using EncounterMobile.NetworkPolicies;
 
 namespace EncounterMobileUnitTests
 {
@@ -16,10 +20,14 @@ namespace EncounterMobileUnitTests
         private RandomSeed Seed = new RandomSeed { Seed = 1234 };
         private int ExpectedRandomIndexFromSeed = 19;
 
+        IReadOnlyPolicyRegistry<string> policyRegistry;
         [SetUp]
         public void Setup()
         {
-
+            policyRegistry = new PolicyRegistry
+            {
+                { PolicyNames.DefaultPolicy, Policy.NoOpAsync() }
+            };
         }
 
         private Task<HttpResponseMessage> GetMonster_MockResponse(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -39,7 +47,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => GetMonster_MockResponse(request, cancellationToken))
                 .Verifiable();
 
-            var subject = new MonsterService(httpMessageHandlerMoq.Object, Seed);
+            var subject = new MonsterService(httpMessageHandlerMoq.Object, policyRegistry, Seed);
             var result = await subject.GetMonster();
             Assert.AreEqual("Bugbear", result.name);
         }
@@ -62,7 +70,7 @@ namespace EncounterMobileUnitTests
                 .Returns((HttpRequestMessage request, CancellationToken cancellationToken) => GetMonsters_MockResponse(request, cancellationToken))
                 .Verifiable();
 
-            var subject = new MonsterService(httpMessageHandlerMoq.Object, Seed);
+            var subject = new MonsterService(httpMessageHandlerMoq.Object, policyRegistry, Seed);
             var actual = await subject.GetMonsters();
             var actualSerialized = JsonConvert.SerializeObject(actual);
 

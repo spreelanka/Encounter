@@ -5,6 +5,7 @@ namespace EncounterMobile.Models
 {
 	public class MapTile:BindableBase
 	{
+        public int Count { get; set; }
 		public string MonsterName => Encounter?.Monsters[0]?.name;
 		public Encounter Encounter { get; set; }
 		public Uri MapUri

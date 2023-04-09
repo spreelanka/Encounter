@@ -7,15 +7,16 @@
         <converters:DefeatedToImageConverter x:Key="defeatedToImageConverter" />
     </ContentPage.Resources>
 
-    <ScrollView>
-        <CollectionView ItemsSource="{Binding MapTiles}"
+    
+        <CollectionView x:Name="mapTilesCollectionView"
+                        ItemsSource="{Binding MapTiles}"
                         ItemsLayout="VerticalGrid, 2"
                         BackgroundColor="White"
+                        RemainingItemsThreshold="10"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMore}"
                         SelectedItem="{Binding SelectedMapTile}"
                         SelectionChangedCommand="{Binding SelectedMapTileChangedCommand}"
                         SelectionMode="Single"
-                        RemainingItemsThreshold="20"
-                        RemainingItemsThresholdReachedCommand="{Binding RemainingItemsThresholdReachedCommand}"
                         >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -31,10 +32,13 @@
                         </Grid.ColumnDefinitions>
                         <Image Grid.RowSpan="2"
                                Grid.ColumnSpan="3"
-                               Source="{Binding MapUri}"
                                Aspect="AspectFit"
                                HeightRequest="200"
-                               WidthRequest="200" />
+                               WidthRequest="200">
+                            <Image.Source>
+                                <UriImageSource Uri="{Binding MapUri}" CachingEnabled="True" CacheValidity="30" />
+                            </Image.Source>
+                        </Image>
                         <Image
                             Source="{Binding Path=Defeated, Converter={StaticResource defeatedToImageConverter}}"
                             HorizontalOptions="Center"
@@ -47,11 +51,20 @@
                                Text="{Binding MonsterName}"
                                FontAttributes="Italic"
                                VerticalOptions="End" />
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               TextColor="OrangeRed"
+                               Text="{Binding Count}"
+                               FontSize="30"
+                               BackgroundColor="White"
+                               
+                               VerticalOptions="Start"
+                               HorizontalOptions="Start"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </ScrollView>
+    
 
 </ContentPage>
 
