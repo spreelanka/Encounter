@@ -53,12 +53,7 @@ namespace EncounterMobile
             var cachePolicy = Policy
                 .CacheAsync(cacheProvider, TimeSpan.FromMinutes(5));
 
-
-            //var all = Policy.WrapAsync(cachePolicy, retry, breaker);
-            //var all = Policy.WrapAsync(retry, breaker);
-
-            //var all = Policy.WrapAsync(retry, Policy.NoOpAsync());
-            var all = Policy.WrapAsync(Policy.NoOpAsync(), Policy.NoOpAsync());
+            var all = Policy.WrapAsync(cachePolicy, retry, breaker);
             return all;
         }
 

@@ -43,20 +43,10 @@ namespace EncounterMobile.ViewModels
 
         public MainPageViewModel(INavigationService navigationService, IEncounterService encounterService, RandomSeed seed = null) : base(navigationService)
         {
-            //ItemsLayout = "VerticalGrid, 2"
             this.constantSeed = seed;
             this.encounterService = encounterService;
             MapTiles = new ObservableCollection<MapTile>();
-            //Task.Run(async () =>
-            //{
-            //    var mapTiles = new ObservableCollection<MapTile>();
-            //    foreach (var m in await GetRandomMapTiles(10))
-            //        mapTiles.Add(m);
-
-            //    MapTiles = mapTiles;
-            //    //await Task.Delay(2000);
-            //    //RemainingItemsThreshold = 10;
-            //});
+            LoadMore.Execute(null);
         }
 
         public async Task<IEnumerable<MapTile>> GetRandomMapTiles(int number)
@@ -86,26 +76,13 @@ namespace EncounterMobile.ViewModels
             {
                 loadingData = true;
                 var mapTiles = new ObservableCollection<MapTile>(MapTiles);
-                var newMapTiles = await GetRandomMapTiles(1);
-                MapTiles.Add(newMapTiles.FirstOrDefault());
+                var newMapTiles = await GetRandomMapTiles(8);
+                foreach (var m in newMapTiles)
+                {
+                    m.Count = MapTiles.Count;
+                    MapTiles.Add(m);
+                }
                 loadingData = false;
-                //Task.Run(async () =>
-                //{
-                    
-                //    MainThread.InvokeOnMainThreadAsync(() =>
-                //    {
-                //        //foreach (var m in newMapTiles)
-                //        //    mapTiles.Add(m);
-                //        //if (!debugFlag) {
-                //        //    debugFlag = true;
-                //        //    MapTiles = mapTiles;
-                //        //}
-
-                //        //OnPropertyChanged(nameof(MapTiles));
-                //        //this.SetProperty(ref mapTiles, MapTiles, OnPropertyChanged, nameof(MapTiles));
-                //        //loadingData = false;
-                //    });
-                //});
             }
         });
 
@@ -113,7 +90,6 @@ namespace EncounterMobile.ViewModels
         {
             base.OnNavigatedTo(parameters);
             SelectedMapTile = null;
-            LoadMore.Execute(null);
         }
     }
 }

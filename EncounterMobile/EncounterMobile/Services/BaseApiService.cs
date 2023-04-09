@@ -38,11 +38,11 @@ namespace EncounterMobile.Services
 
         public async Task<TResponse> Get<TResponse>(string relativePath)
         {
-            //var response = await policy.ExecuteAsync(async (context) => {
-            //    return await Client.GetAsync(relativePath);
-            //    }, new Context(relativePath));
+            var response = await policy.ExecuteAsync(async (context) =>
+            {
+                return await Client.GetAsync(relativePath);
+            }, new Context(relativePath));
 
-            var response = await Client.GetAsync(relativePath);
             if (!response.IsSuccessStatusCode)
             {
                 System.Diagnostics.Debug.WriteLine("Response Code: " + (int)response.StatusCode + " - " + response.StatusCode.ToString());

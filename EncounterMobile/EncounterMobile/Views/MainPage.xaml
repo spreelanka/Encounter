@@ -12,8 +12,7 @@
                         ItemsSource="{Binding MapTiles}"
                         ItemsLayout="VerticalGrid, 2"
                         BackgroundColor="White"
-                        RemainingItemsThreshold="{Binding LoadMoreThreshold}"
-                        RemainingItemsThresholdReached="OnCollectionViewRemainingItemsThresholdReached"
+                        RemainingItemsThreshold="10"
                         RemainingItemsThresholdReachedCommand="{Binding LoadMore}"
                         SelectedItem="{Binding SelectedMapTile}"
                         SelectionChangedCommand="{Binding SelectedMapTileChangedCommand}"
@@ -52,6 +51,15 @@
                                Text="{Binding MonsterName}"
                                FontAttributes="Italic"
                                VerticalOptions="End" />
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               TextColor="OrangeRed"
+                               Text="{Binding Count}"
+                               FontSize="30"
+                               BackgroundColor="White"
+                               
+                               VerticalOptions="Start"
+                               HorizontalOptions="Start"/>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
