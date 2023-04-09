@@ -20,14 +20,6 @@ namespace EncounterMobile.ViewModels
         private int seed => constantSeed?.Seed ?? Environment.TickCount;
         private RandomSeed constantSeed = null;
 
-        int loadMoreThreshold = 10;
-        public int LoadMoreThreshold
-        {
-
-            get => loadMoreThreshold;
-            set => this.SetProperty(ref loadMoreThreshold, value, OnPropertyChanged);
-        }
-
         ObservableCollection<MapTile> mapTiles;
         public ObservableCollection<MapTile> MapTiles {
             get => mapTiles;

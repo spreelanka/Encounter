@@ -17,6 +17,8 @@ using EncounterMobile.NetworkPolicies;
 using Polly;
 using Microsoft.Extensions.Caching.Memory;
 using Polly.Caching.Memory;
+using NeoSmart.Caching.Sqlite;
+using Polly.Caching.Distributed;
 
 namespace EncounterMobile
 {
@@ -51,7 +53,7 @@ namespace EncounterMobile
             var cacheProvider = new MemoryCacheProvider(cache);
             
             var cachePolicy = Policy
-                .CacheAsync(cacheProvider, TimeSpan.FromMinutes(5));
+                .CacheAsync(cacheProvider, TimeSpan.FromHours(1));
 
             var all = Policy.WrapAsync(cachePolicy, retry, breaker);
             return all;
