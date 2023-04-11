@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncounterMobile", "Encounte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncounterMobileUnitTests", "EncounterMobileUnitTests\EncounterMobileUnitTests.csproj", "{92DDBA7C-1C20-4120-91C1-345FC2A0B395}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncounterMobileUITests", "EncounterMobileUITests\EncounterMobileUITests.csproj", "{D948D931-556A-4F5A-9005-FE88C6433693}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{92DDBA7C-1C20-4120-91C1-345FC2A0B395}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92DDBA7C-1C20-4120-91C1-345FC2A0B395}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92DDBA7C-1C20-4120-91C1-345FC2A0B395}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D948D931-556A-4F5A-9005-FE88C6433693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D948D931-556A-4F5A-9005-FE88C6433693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D948D931-556A-4F5A-9005-FE88C6433693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D948D931-556A-4F5A-9005-FE88C6433693}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
