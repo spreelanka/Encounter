@@ -3,14 +3,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using EncounterMobile.Models;
 using EncounterMobile.Services.Interfaces;
+using Newtonsoft.Json;
 
 namespace EncounterMobile.ViewModels
 {
     public class MapTilePageViewModel : BaseViewModel
     {
-        protected IEncounterService encounterService { get; set; }
         MapTile mapTile;
-
         public MapTile MapTile
         {
             get => mapTile;
@@ -18,15 +17,16 @@ namespace EncounterMobile.ViewModels
         }
 
         public Monster Monster => MapTile.Encounter.Monsters[0];
-        public MapTilePageViewModel(INavigationService navigationService, IEncounterService encounterService): base(navigationService)
+        public MapTilePageViewModel(INavigationService navigationService): base(navigationService)
         {
-            this.encounterService = encounterService;
         }
 
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             MapTile = parameters.FirstOrDefault(e => e.Key == nameof(MapTile)).Value as MapTile;
+            if (MapTile == null)
+                throw new ArgumentNullException("must provide MapTile in NavigationParameters");
         }
     }
 }

@@ -10,6 +10,7 @@ using EncounterMobile.Views;
 using EncounterMobile.Helpers;
 using Prism.Navigation.Xaml;
 using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace EncounterMobile.ViewModels
 {
@@ -19,6 +20,7 @@ namespace EncounterMobile.ViewModels
         protected IEncounterService encounterService { get; set; }
         private int seed => constantSeed?.Seed ?? Environment.TickCount;
         private RandomSeed constantSeed = null;
+        readonly Random random;
 
         ObservableCollection<MapTile> mapTiles;
         public ObservableCollection<MapTile> MapTiles {
@@ -36,18 +38,20 @@ namespace EncounterMobile.ViewModels
         public MainPageViewModel(INavigationService navigationService, IEncounterService encounterService, RandomSeed seed = null) : base(navigationService)
         {
             this.constantSeed = seed;
+            //this.constantSeed = new RandomSeed { Seed = 1234 };
+            random = new Random(this.seed);
             this.encounterService = encounterService;
             MapTiles = new ObservableCollection<MapTile>();
-            LoadMore.Execute(null);
         }
 
         public async Task<IEnumerable<MapTile>> GetRandomMapTiles(int number)
         {
             var mapTiles = new ObservableCollection<MapTile>();
+            
             for (var i = 0; i < number; i++)
             {
                 var encounter = await encounterService.GetEncounter();
-                var tileIndex = (new Random(seed)).Next(UniqueGeomorphCount) + 1;
+                var tileIndex = random.Next(UniqueGeomorphCount) + 1;
                 var t = new MapTile { Encounter = encounter, MapUri = new Uri($"https://encounterstorage1.blob.core.windows.net/geomorphs/{tileIndex}.png") };
                 mapTiles.Add(t);
             }
@@ -64,7 +68,7 @@ namespace EncounterMobile.ViewModels
         private bool loadingData;
         public ICommand LoadMore => new Command(async () =>
         {
-            if (!loadingData)// && MapTiles?.Count > 0)
+            if (!loadingData)
             {
                 loadingData = true;
                 var mapTiles = new ObservableCollection<MapTile>(MapTiles);
@@ -81,6 +85,8 @@ namespace EncounterMobile.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
+            if(MapTiles.Count==0)
+                LoadMore.Execute(null);
             SelectedMapTile = null;
         }
     }
