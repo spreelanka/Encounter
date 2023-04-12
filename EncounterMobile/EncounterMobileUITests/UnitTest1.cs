@@ -15,6 +15,7 @@ public class Tests
     {
 
         var options= new AppiumOptions();
+        options.AutomationName = "xcuitest"; //uiautomator2
         options.BrowserName = "";
         options.PlatformName = "iOS";
         options.PlatformVersion = "16.2";
@@ -23,8 +24,8 @@ public class Tests
         return options;
     }
 
-    //[OneTimeSetUp]
-    [Test]
+    [OneTimeSetUp]
+    //[Test]
     public void SetupAll()
     {
         var assemblyLoc = Assembly.GetExecutingAssembly().Location;
@@ -35,11 +36,10 @@ public class Tests
         
         var options = GetIosOptions(path);
 
-        Uri serverUri = new Uri("http://127.0.0.1:4723/wd/hub");
-        IOSDriver i;
+        Uri serverUri = new Uri("http://127.0.0.1:4723");
         driver = new IOSDriver(serverUri, options);// AppiumDriver<Appium(serverUri, options);//, /*timeout*/TimeSpan.Zero);
         driver.CloseApp();
-        driver.LaunchApp();
+        //driver.LaunchApp();
         //driver.Manage().Timeouts().ImplicitlyWait(/*timeout*/TimeSpan.Zero);
 
     }
@@ -47,17 +47,24 @@ public class Tests
     [SetUp]
     public void Setup()
     {
+        driver.LaunchApp();
     }
 
     [TearDown]
     public void Teardown()
     {
-
+        driver.CloseApp();
     }
 
     [Test]
-    public void Test1()
+    public void PassTest()
     {
         Assert.Pass();
+    }
+
+    [Test]
+    public void FailTest()
+    {
+        Assert.Fail();
     }
 }
