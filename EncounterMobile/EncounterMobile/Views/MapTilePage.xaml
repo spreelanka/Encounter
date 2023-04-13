@@ -4,11 +4,13 @@
              x:Class="EncounterMobile.Views.MapTilePage"
              Title="MapTilePage">
     <VerticalStackLayout>
-        <Label 
+        <Label
             Text="{Binding MapTile.Encounter.Monsters[0].name}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <CheckBox IsChecked="{Binding MapTile.Defeated,Mode=TwoWay}" />
+        <CheckBox
+            AutomationId="DefeatedCheckBox"
+            IsChecked="{Binding MapTile.Defeated,Mode=TwoWay}" />
         <Label Text="Defeated" />
     </VerticalStackLayout>
 </ContentPage>
