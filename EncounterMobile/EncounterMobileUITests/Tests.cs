@@ -94,15 +94,4 @@ public class Tests
         Assert.AreEqual(beforeOther, afterOther);
     }
 
-    [Test]
-    public void PassTest()
-    {
-        Assert.Pass();
-    }
-
-    [Test]
-    public void FailTest()
-    {
-        Assert.Fail();
-    }
 }
