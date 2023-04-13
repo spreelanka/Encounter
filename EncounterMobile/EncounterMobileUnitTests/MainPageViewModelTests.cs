@@ -143,7 +143,7 @@ namespace EncounterMobileUnitTests
                 collectionChangedNotifiedCount += 1;
                 if (collectionChangedNotifiedCount >= expectedChangeCount)
                 {
-                    await Task.Delay(50);
+                    await Task.Delay(100);
                     tcs.TrySetResult(true);
                 }
             };

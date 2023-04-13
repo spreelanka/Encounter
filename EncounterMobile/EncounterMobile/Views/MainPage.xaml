@@ -20,7 +20,12 @@
                         >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid Padding="0">
+                    <Grid Padding="0" >
+                        <Grid.AutomationId>
+                            <MultiBinding StringFormat="MapTile{0}">
+                                <Binding Path="Count" />
+                            </MultiBinding>
+                        </Grid.AutomationId>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -30,7 +35,9 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.RowSpan="2"
+                        <Image
+                               AutomationId="MapTileImage"
+                               Grid.RowSpan="2"
                                Grid.ColumnSpan="3"
                                Aspect="AspectFit"
                                HeightRequest="200"
@@ -40,20 +47,18 @@
                             </Image.Source>
                         </Image>
                         <Image
+                            AutomationId="EncounterImage"
                             Source="{Binding Path=Defeated, Converter={StaticResource defeatedToImageConverter}}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"
+                            Aspect="AspectFit"
+                            WidthRequest="100"
+                            HeightRequest="100"
                             Grid.RowSpan="2"
                             Grid.Column="1"/>
-                        <Label Grid.Row="1"
-                               Grid.Column="1"
-                               IsVisible="false"
-                               Text="{Binding MonsterName}"
-                               FontAttributes="Italic"
-                               VerticalOptions="End" />
                         <Label Grid.Row="0"
                                Grid.Column="0"
-                               TextColor="OrangeRed"
+                               TextColor="Transparent"
                                Text="{Binding Count}"
                                FontSize="30"
                                BackgroundColor="White"
