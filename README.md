@@ -7,6 +7,15 @@ infinite scrolling dungeon. each tile has 1 level 1 monster. tapping the tile wi
 | -- | -- |
 |![](docs/clip1.gif) |![](docs/clip2.gif) |
 
+## App Tech Stack
+### app
+- dotnet MAUI targeting ios & android
+- Prism
+- Polly
+### unit & ui testing
+- NUnit
+- Appium
+
 ## architecture and feature highlights 
 - rest api architecture [PrismConfig.cs #L41](https://github.com/spreelanka/Encounter/blob/cc7a22c90af2aaf3df2139f8d17c3fff68688a15/EncounterMobile/EncounterMobile/PrismConfig.cs#L41)
 	- resilient
